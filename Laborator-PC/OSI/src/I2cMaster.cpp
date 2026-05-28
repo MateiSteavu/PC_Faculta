@@ -5,7 +5,7 @@ void I2cMaster::_writeByte(const char& data) {
     // TODO: 2. send 1 byte on I2C
     // write byte
     TWDR = data;
-    TWCR = (1<<TWINT) | (1<<TWEN);
+    TWCR = (1<<TWINT) | (1<<TWEN);  // 
     // send command to send byte
     // wait for ack or nack
     while (!(TWCR & (1<<TWINT)))
@@ -29,13 +29,13 @@ void I2cMaster::init() {
     // set frequency; read datasheet for SCLK frequency
     
     TWSR = 0x00; 
-    TWBR    = 0x1F;
+    TWBR    = 0x1F;     //Bit rate formula pag 180
     // set SCLK pin output
     // DDRC    |= (1<<PC5);
     // DDRC    &= ~(1<<PC4);
     // enable internal pull up resistor for SCLK and SDA, set PORTxn = 1
     PORTC   |= (1<<PC5)|(1<<PC4);
-    TWCR = (1 << TWEN);
+    TWCR = (1 << TWEN);             //two wire enables
 }
 
 void I2cMaster::sendStart() {

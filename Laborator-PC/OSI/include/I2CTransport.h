@@ -17,30 +17,8 @@ class I2cTransport : public IAdxlTransport {
 public:
     I2cTransport() {}
 
-    void init(){
-        i2c.init();
-    }
+    void init();
 
-    bool write(int addr, const char* d, int len = 1){
-        for(short i = 0; i<len;i++){
-            i2c.sendStart();
-            i2c.writeAddrWrite(dev_addr);
-            i2c.writeByte(addr, ACKNOWLEDGE);
-            i2c.writeByte(d[i], ACKNOWLEDGE);
-            i2c.sendStop();
-        }
-        return true;
-    }
-    bool read(int addr, char* d, int len = 1){
-        for(short i = 0; i<len;i++){
-            i2c.sendStart();
-            i2c.writeAddrWrite(dev_addr);
-            i2c.writeByte(addr, ACKNOWLEDGE );
-            i2c.sendStart();
-            i2c.writeAddrRead(dev_addr);
-            i2c.readByte(d[i], NOT_ACKNOWLEDGE);
-            i2c.sendStop();
-        }
-        return true;
-    }
+    bool write(int addr, const char* d, int len = 1);
+    bool read(int addr, char* d, int len = 1);
 }; 

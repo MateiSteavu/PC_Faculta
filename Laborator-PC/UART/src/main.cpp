@@ -23,28 +23,28 @@ Uart uart;
 
 void setup() {
     // initialize GDB stub
-    DDRB |= P9;
+    DDRB |= P9;     //logic 1, output
     DDRD |= PD3;
-    DDRD &= ~PD4;
+    DDRD &= ~PD4;   //logic 0, input
 
     PORTB &= ~P9;
-    PORTD &= ~PD3;
+    PORTD &= ~PD3;  //set low
     uart.init();
 }
 
 void inline setLed0State(LedState state) {
     if(state == ON){
-        PORTD |= PD3;
+        PORTD |= PD3;   //set high
     }
     else{
-        PORTD &= ~PD3;
+        PORTD &= ~PD3;  //set low
     }
 }
 
 // read button state
 ButtonState inline readBtnState() {
     ButtonState b1;
-    if((PIND & PD4)>>4==1)
+    if((PIND & PD4)>>4==1)  //read pin 4
         b1 = ButtonState::PRESSED;
     else
         b1 = ButtonState::NOT_PRESSED;
@@ -111,10 +111,10 @@ void loop() {
                 }
                 else{
                     if(c=='_'){
-                        TCCR1A = (0b10<<0)|(0b11<<6);  
-                        TCCR1B = (0b11<<3)|(0b101<<0);
-                        ICR1 = TOP;
-                        OCR1A = Valoare;
+                        TCCR1A = (0b10<<0)|(0b11<<6);   //compare output mode, WGM pins set waveform generator mode, pag 109
+                        TCCR1B = (0b11<<3)|(0b101<<0);  //CS for scaling
+                        ICR1 = TOP;                     //top value for reset
+                        OCR1A = Valoare;                //value where signal toggles
                     }
                     else{
                         if(c=='-'){

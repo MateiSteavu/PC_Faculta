@@ -3,15 +3,14 @@
 
 #include "IAdxlTransport.h"
 #include "SpiMaster.h"
+#include "avr8-stub.h"
 
-class AdxlTransportSPI : public IAdxlTransport {
+class SpiTransport : public IAdxlTransport {
 private:
     SpiMaster spi;
-    char* port;
-    char mask;
 
 public:
-    AdxlTransportSPI(char* port, char mask);
+    SpiTransport() {};
     void init();
     
     bool read(int addr, char* d, int len = 1);

@@ -25,7 +25,7 @@ SpiMaster spi;
 Uart uart;
 
 void ADXL_enable() {
-    PORTB &= ~(1<<PB0);
+    PORTB &= ~(1<<PB0);//chip select
     // TODO: 2. select ADXL
 }
 
